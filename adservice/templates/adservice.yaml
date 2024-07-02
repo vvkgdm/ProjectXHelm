@@ -18,7 +18,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: {{ .Values.adService.name }}
-  namespace: {{.Release.Namespace}}
+  namespace: {{ .Values.adService.namespace }}
   {{- if not .Values.serviceAccounts.annotationsOnlyForCartservice }}
   {{- with .Values.serviceAccounts.annotations }}
   annotations:
@@ -31,7 +31,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.adService.name }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.adService.namespace }}
   labels:
     app: {{ .Values.adService.name }}
 spec:
@@ -90,7 +90,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.adService.name }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.adService.namespace }}
   labels:
     app: {{ .Values.adService.name }}
 spec:
@@ -107,7 +107,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: {{ .Values.adService.name }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.adService.namespace }}
 spec:
   podSelector:
     matchLabels:
@@ -132,7 +132,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: Sidecar
 metadata:
   name: {{ .Values.adService.name }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.adService.namespace }}
 spec:
   workloadSelector:
     labels:
@@ -141,7 +141,7 @@ spec:
   - hosts:
     - istio-system/*
     {{- if .Values.opentelemetryCollector.create }}
-    - ./{{ .Values.opentelemetryCollector.name }}.{{ .Release.Namespace }}.svc.cluster.local
+    - ./{{ .Values.opentelemetryCollector.name }}.{{ .Values.adService.namespace }}.svc.cluster.local
     {{- end }}
 {{- end }}
 {{- if .Values.authorizationPolicies.create }}
@@ -150,7 +150,7 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: {{ .Values.adService.name }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Values.adService.namespace }}
 spec:
   selector:
     matchLabels:
@@ -160,9 +160,9 @@ spec:
     - source:
         principals:
         {{- if .Values.serviceAccounts.create }}
-        - cluster.local/ns/{{ .Release.Namespace }}/sa/{{ .Values.frontend.name }}
+        - cluster.local/ns/{{ .Values.adService.namespace }}/sa/{{ .Values.frontend.name }}
         {{- else }}
-        - cluster.local/ns/{{ .Release.Namespace }}/sa/default
+        - cluster.local/ns/{{ .Values.adService.namespace }}/sa/default
         {{- end }}
     to:
     - operation:
