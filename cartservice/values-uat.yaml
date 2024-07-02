@@ -59,6 +59,7 @@ seccompProfile:
 adService:
   create: true
   name: adservice
+  namespace: uat  
   resources:
     requests:
       cpu: 200m
@@ -70,6 +71,7 @@ adService:
 cartService:
   create: true
   name: cartservice
+  namespace: uat  
   resources:
     requests:
       cpu: 200m
@@ -81,6 +83,7 @@ cartService:
 checkoutService:
   create: true
   name: checkoutservice
+  namespace: uat  
   resources:
     requests:
       cpu: 100m
@@ -92,6 +95,7 @@ checkoutService:
 currencyService:
   create: true
   name: currencyservice
+  namespace: uat  
   resources:
     requests:
       cpu: 100m
@@ -103,6 +107,7 @@ currencyService:
 emailService:
   create: true
   name: emailservice
+  namespace: uat  
   resources:
     requests:
       cpu: 100m
@@ -114,6 +119,7 @@ emailService:
 frontend:
   create: true
   name: frontend
+  namespace: uat  
   externalService: true
   cymbalBranding: false
   # One of: local, gcp, aws, azure, onprem, alibaba. When not set, defaults to "local" unless running in GKE, otherwise auto-sets to gcp.
@@ -138,6 +144,7 @@ frontend:
 
 loadGenerator:
   create: true
+  namespace: uat  
   name: loadgenerator
   checkFrontendInitContainer: true
   resources:
@@ -151,6 +158,7 @@ loadGenerator:
 paymentService:
   create: true
   name: paymentservice
+  namespace: uat  
   resources:
     requests:
       cpu: 100m
@@ -162,6 +170,7 @@ paymentService:
 productCatalogService:
   create: true
   name: productcatalogservice
+  namespace: uat  
   # Specifies an extra latency to any request on productcatalogservice, by default no extra latency.
   extraLatency: ""
   resources:
@@ -175,6 +184,7 @@ productCatalogService:
 recommendationService:
   create: true
   name: recommendationservice
+  namespace: uat  
   resources:
     requests:
       cpu: 100m
@@ -186,6 +196,7 @@ recommendationService:
 shippingService:
   create: true
   name: shippingservice
+  namespace: uat  
   resources:
     requests:
       cpu: 100m
@@ -197,6 +208,7 @@ shippingService:
 cartDatabase:
   # Specifies the type of the cartservice's database, could be either redis or spanner.
   type: redis
+  namespace: uat  
   connectionString: "redis-cart:6379"
   inClusterRedis:
     create: true
